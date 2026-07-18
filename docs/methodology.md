@@ -23,19 +23,32 @@ two generative approaches, compared directly against each other.
 - Decoding at inference uses beam search (favoring coherent, high-likelihood
   output over the more exploratory decoding typical of prompted LLMs)
 
-## Open Question to Resolve Before Phase 2
+## Resolved: Training Targets and Task Granularity (decided after inspecting real data)
 
-The Amazon Product Reviews dataset does not include reference/gold
-summaries. Before fine-tuning BART, decide on one of:
-1. Use review **titles** as a weak-supervision proxy for summaries
-2. Generate synthetic reference summaries with the LLM and treat those as
-   training targets for BART (introduces some circularity — worth noting
-   as a limitation in the final report)
-3. Use a different summarization-labeled dataset for BART's fine-tuning
-   data, and Amazon Reviews only for the prompted-LLM comparison
+The dataset in use is Amazon Fine Food Reviews (`Reviews.csv`), which
+includes a `Summary` column — a short, human-written headline for each
+**individual** review (e.g. "great tea", "awesome!"). It is not a synthesis
+across multiple reviews for a product.
 
-Document whichever choice is made here, since it affects how the ROUGE/BERTScore
-results should be interpreted.
+This resolves the earlier open question, but with an important caveat:
+**the two models operate at different granularities, by design:**
+
+- **BART** is fine-tuned on single-review pairs: `Text` (input) → `Summary`
+  (target). This is a standard, well-suited task for BART's architecture.
+- **The prompted LLM** operates on multi-review batches per product (see
+  `data/preprocess.py:create_batches`), producing a structured summary
+  (sentiment / pros / cons / recommendation) synthesized across several
+  reviews at once.
+
+**Implication for evaluation:** ROUGE and BERTScore should be computed
+*within* each model's own task (BART vs. held-out `Summary` values; LLM vs.
+a small manually-curated or LLM-assisted set of product-level reference
+summaries) rather than directly against each other. The cross-model
+comparison in the final report should lean on the manual rubric
+(`evaluation/manual_evaluation.py`) for a fair head-to-head judgment, since
+the two models are not solving numerically identical tasks — the
+comparison is about the zero-shot vs. fine-tuned tradeoff, not about
+matching output format.
 
 ## Evaluation
 
