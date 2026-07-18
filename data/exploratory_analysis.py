@@ -22,31 +22,39 @@ matplotlib.use("Agg")  # headless-safe for Colab / CI
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from preprocess import COLUMN_MAP
+
 
 def run_eda(input_path: str, output_dir: str) -> None:
     df = pd.read_csv(input_path)
     out = Path(output_dir)
     out.mkdir(parents=True, exist_ok=True)
 
+    product_col = COLUMN_MAP["product_id"]
+    text_col = COLUMN_MAP["review_text"]
+    rating_col = COLUMN_MAP["rating"]
+
     print(f"Total reviews: {len(df)}")
-    print(f"Unique products: {df['product_id'].nunique() if 'product_id' in df.columns else 'N/A'}")
+    print(f"Unique products: {df[product_col].nunique() if product_col in df.columns else 'N/A'}")
     print("\nMissing values per column:")
     print(df.isna().sum())
 
     # Rating distribution
-    if "rating" in df.columns:
+    if rating_col in df.columns:
         plt.figure(figsize=(6, 4))
-        df["rating"].value_counts().sort_index().plot(kind="bar")
+        df[rating_col].value_counts().sort_index().plot(kind="bar")
         plt.title("Rating Distribution")
         plt.xlabel("Star Rating")
         plt.ylabel("Count")
         plt.tight_layout()
         plt.savefig(out / "rating_distribution.png")
         plt.close()
+    else:
+        print(f"\n[WARNING] Rating column '{rating_col}' not found in data — skipping rating distribution plot.")
 
     # Review length distribution
-    if "review_text" in df.columns:
-        lengths = df["review_text"].astype(str).str.split().str.len()
+    if text_col in df.columns:
+        lengths = df[text_col].astype(str).str.split().str.len()
         plt.figure(figsize=(6, 4))
         lengths.plot(kind="hist", bins=30)
         plt.title("Review Length Distribution (words)")
@@ -55,17 +63,21 @@ def run_eda(input_path: str, output_dir: str) -> None:
         plt.savefig(out / "review_length_distribution.png")
         plt.close()
         print(f"\nAverage review length: {lengths.mean():.1f} words")
+    else:
+        print(f"\n[WARNING] Text column '{text_col}' not found in data — skipping review length plot.")
 
     # Reviews per product (top products by volume)
-    if "product_id" in df.columns:
+    if product_col in df.columns:
         plt.figure(figsize=(6, 4))
-        df["product_id"].value_counts().head(10).plot(kind="bar")
+        df[product_col].value_counts().head(10).plot(kind="bar")
         plt.title("Top 10 Products by Review Count")
         plt.xlabel("Product ID")
         plt.ylabel("Number of Reviews")
         plt.tight_layout()
         plt.savefig(out / "top_products_by_review_count.png")
         plt.close()
+    else:
+        print(f"\n[WARNING] Product column '{product_col}' not found in data — skipping top-products plot.")
 
     print(f"\nFigures saved to {out}")
 
