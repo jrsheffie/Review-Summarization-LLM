@@ -1,0 +1,23 @@
+# Data pipeline (Milestone 3 -- already built and tested)
+pandas>=2.0
+langdetect>=1.0.9
+matplotlib>=3.7
+pytest>=7.0
+
+# Dataset download
+kaggle>=1.6
+
+# Phase 2 -- BART + LoRA fine-tuning (install on Colab; torch is preinstalled there)
+transformers>=4.40
+peft>=0.11
+datasets>=2.19
+accelerate>=0.30
+
+# Phase 2 -- Prompted LLM API
+anthropic>=0.30
+# openai>=1.30  # uncomment if using GPT-4 instead of/in addition to Claude
+
+# Phase 3 -- Evaluation
+evaluate>=0.4
+rouge-score>=0.1.2
+bert-score>=0.3.13

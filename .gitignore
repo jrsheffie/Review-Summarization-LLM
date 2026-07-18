@@ -1,0 +1,32 @@
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Raw dataset -- too large to commit, keep the sample for reproducibility
+data/raw/*.csv
+!data/raw/sample_reviews.csv
+
+# Processed data and generated outputs -- regenerable, not committed
+data/processed/*
+!data/processed/.gitkeep
+outputs/summaries/*
+!outputs/summaries/.gitkeep
+outputs/figures/*
+!outputs/figures/.gitkeep
+outputs/metrics/*
+!outputs/metrics/.gitkeep
+
+# Model checkpoints -- large binary files, use Drive/HF Hub instead
+*.pt
+*.bin
+*.safetensors
+checkpoints/
+
+# Secrets
+kaggle.json
+.env
+
+.DS_Store
+*.egg-info/

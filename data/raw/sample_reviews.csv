@@ -1,0 +1,16 @@
+product_id,category,review_title,review_text,rating,helpful_votes
+B001,Electronics,Great headphones,"These headphones sound amazing and the battery lasts all day. Highly recommend for the price.",5,12
+B001,Electronics,Great headphones,"These headphones sound amazing and the battery lasts all day. Highly recommend for the price.",5,12
+B001,Electronics,Decent but pricey,"Sound quality is good but I expected more given the price point. Comfortable for long sessions though.",3,4
+B001,Electronics,Broke after a week,"Left ear stopped working after 8 days. Support was slow to respond. Disappointed.",1,20
+B001,Electronics,ok,"ok",3,0
+B002,Kitchen,Best blender ever,"This blender crushes ice like butter and cleanup is a breeze. Worth every penny.",5,8
+B002,Kitchen,Loud but effective,"It is quite loud but gets the job done quickly. Smoothies come out perfectly smooth.",4,5
+B002,Kitchen,Leaks from base,"Mine started leaking liquid from the base after two weeks of light use. Returning it.",2,15
+B002,Kitchen,,"",,0
+B003,Books,Couldn't put it down,"Gripping plot from start to finish, the character development in the second half really pulled me in and kept me reading late into the night.",5,30
+B003,Books,Slow start,"Took about 100 pages to get interesting but the payoff was worth it in the end.",4,6
+B003,Books,Not for me,"Ce livre n'était pas pour moi, je n'ai pas aimé le style d'écriture du tout.",2,3
+B003,Books,Predictable ending,"Enjoyed most of it but the twist was easy to guess halfway through the book.",3,2
+B004,Electronics,Excellent value,"For the price this is an excellent monitor with great color accuracy and a thin bezel.",5,18
+B004,Electronics,Dead pixels,"Arrived with two dead pixels in the corner. Otherwise picture quality is nice.",2,9
