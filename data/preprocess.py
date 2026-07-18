@@ -43,11 +43,11 @@ logger = logging.getLogger(__name__)
 # different column names depending on the version. Adjust this mapping once,
 # here, rather than touching the functions below.
 COLUMN_MAP = {
-    "product_id": "product_id",
-    "review_title": "review_title",
-    "review_text": "review_text",
-    "rating": "rating",
-    "helpful_votes": "helpful_votes",
+    "product_id": "ProductId",
+    "review_title": "Summary",
+    "review_text": "Text",
+    "rating": "Score",
+    "helpful_votes": "HelpfulnessNumerator",
 }
 
 
