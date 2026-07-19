@@ -30,3 +30,6 @@ kaggle.json
 
 .DS_Store
 *.egg-info/
+
+# BART/LoRA training checkpoints -- regenerable, keep in Drive backup instead
+outputs/bart_lora*/
