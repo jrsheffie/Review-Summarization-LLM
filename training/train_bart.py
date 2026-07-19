@@ -105,7 +105,7 @@ def train(train_path: str = "data/processed/train.csv", val_path: str = "data/pr
         train_dataset=train_ds,
         eval_dataset=val_ds,
         data_collator=data_collator,
-        tokenizer=tokenizer,
+        processing_class=tokenizer,
     )
 
     print("Starting training...")
