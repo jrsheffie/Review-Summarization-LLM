@@ -32,9 +32,9 @@ for full details, `docs/literature_review.md` for supporting research, and
 ├── models/
 │   ├── config.py                # Shared hyperparameter configs
 │   ├── llm_prompting.py         # Claude API summarization pipeline - built
-│   └── bart_model.py            # BART + LoRA loading (Phase 2, needs Colab GPU)
+│   └── bart_model.py            # BART + LoRA loading via PEFT - built
 ├── training/
-│   ├── train_bart.py            # Fine-tuning loop (Phase 2 - in progress)
+│   ├── train_bart.py            # BART + LoRA fine-tuning loop - built
 │   ├── inference.py             # Beam-search generation (Phase 2)
 │   └── utils.py                 # Seeding, shared helpers
 ├── evaluation/
@@ -44,7 +44,10 @@ for full details, `docs/literature_review.md` for supporting research, and
 │   ├── llm_judge.py             # Claude-as-judge for prompted-LLM summaries (no reference) - built
 │   └── manual_evaluation.py     # Human rubric scoring scaffold
 ├── notebooks/
-│   └── 00_colab_setup.ipynb     # Run first each Colab session - ready
+│   ├── 00_colab_setup.ipynb     # Run first each Colab session - ready
+│   └── 01_train_bart.ipynb      # Official BART + LoRA training run (30k-row subset) - ready
+├── experiments/
+│   └── README.md                # Scratch space for hyperparameter exploration, ad hoc checks
 ├── docs/
 │   ├── methodology.md           # Approach, task-granularity decision, evaluation design
 │   ├── literature_review.md     # Verified summaries of 7 supporting papers - complete
@@ -54,6 +57,7 @@ for full details, `docs/literature_review.md` for supporting research, and
 │   └── timeline.md
 ├── outputs/
 │   ├── summaries/, figures/, metrics/   # Generated artifacts (gitignored)
+│   └── bart_lora_*/                     # Training checkpoints (gitignored; backed up to Drive)
 ├── tests/
 │   └── test_preprocess.py       # 8 passing unit tests
 ├── requirements.txt
@@ -67,6 +71,9 @@ for full details, `docs/literature_review.md` for supporting research, and
 2. Runtime → Change runtime type → GPU (T4 is fine)
 3. Run all cells: mounts Drive, clones this repo, installs `requirements.txt`,
    confirms GPU, sets up API keys, downloads the dataset
+4. For fine-tuning BART, run `notebooks/01_train_bart.ipynb` afterward — it
+   trains on a fixed 30k-row subset (~30-45 min on a T4) and backs the
+   resulting checkpoint up to Drive
 
 ## Setup (local, alternative)
 
@@ -116,6 +123,21 @@ in training and evaluation.
         --input data/raw/sample_reviews.csv \
         --output-dir outputs/figures
 
+## Running BART Fine-Tuning
+
+    # Full dataset (defaults to data/processed/train.csv and val.csv)
+    python -m training.train_bart
+
+    # Custom subset (used by notebooks/01_train_bart.ipynb for the official run)
+    python -m training.train_bart \
+        --train-path data/processed/train_subset_30k.csv \
+        --val-path data/processed/val_subset_30k.csv \
+        --output-dir outputs/bart_lora_30k
+
+Training uses the hyperparameters in `models/config.py`'s `BartConfig` and
+`LoRAConfig`. For alternate subset sizes or hyperparameter exploration, see
+`experiments/`.
+
 ## Running Evaluation
 
     # BART vs. reference Summary column (ROUGE + BERTScore)
@@ -137,6 +159,6 @@ in training and evaluation.
 ## Roadmap
 
 - [x] **Milestone 3** — Repo structure, README, data pipeline (built & tested), EDA, documentation, literature review
-- [ ] **Phase 2** — Prompted-LLM API wired in (done); BART + LoRA fine-tuning in progress
+- [ ] **Phase 2** — Prompted-LLM API wired in (done); BART + LoRA training pipeline built and running on a 30k-row subset
 - [ ] **Phase 3** — Evaluation pipeline built (ROUGE, BERTScore, LLM-judge); full-scale run pending
 - [ ] **Phase 4** — Final report and presentation
