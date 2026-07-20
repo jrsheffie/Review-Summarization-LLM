@@ -2,72 +2,89 @@
 
 ## Method (per docs/methodology.md)
 
-Per the resolved task-granularity decision in `docs/methodology.md`, BART and
-the prompted LLM solve different tasks and are evaluated separately against
-their own ground truth, rather than against each other:
+Per the task-granularity decision in `docs/methodology.md`, BART and the
+prompted LLM solve different tasks and are evaluated separately against
+their own appropriate ground truth:
 
-- **BART** is evaluated against the real `Summary` column from the Amazon
-  Fine Food Reviews dataset (per-review reference summaries) using
-  ROUGE-1/2/L and BERTScore.
+- **BART** is fine-tuned and evaluated on single-review pairs (`Text` ->
+  `Summary`), using the real `Summary` column from the Amazon Fine Food
+  Reviews dataset. Metrics: ROUGE-1/2/L and BERTScore, computed on a
+  held-out **test** subset (n=3,000, seed=42) that the model never saw
+  during training or validation-loss monitoring.
 - **The prompted LLM** produces product-level, multi-review synthesis with
-  no reference summary available, so it is evaluated using the manual
-  rubric (`evaluation/manual_evaluation.py`) and an LLM-judge comparison
-  against the original review text directly, not against BART's output.
-- The **cross-model comparison** is qualitative, via the manual rubric,
-  reflecting the zero-shot vs. fine-tuned tradeoff rather than a shared
-  numeric metric.
+  no reference summary available at that granularity, so it is evaluated
+  via LLM-judge (Claude comparing the summary directly to the source
+  reviews) and, eventually, the manual rubric.
 
-## Status: Preliminary / Pipeline Validation
+## BART Results (n=3,000, held-out test set)
 
-BART fine-tuning has not yet been run (`training/train_bart.py` is still a
-scaffold — see Roadmap in `README.md`), so ROUGE/BERTScore results against
-the `Summary` ground truth are **not yet available**. This section will be
-completed once Phase 2 training is done.
+Fine-tuned with LoRA (r=16, alpha=32, dropout=0.05) on a 30k-row training
+subset, 3 epochs (see `01_train_bart.ipynb`). Training loss: 2.61 -> 2.45 ->
+2.58; validation loss: 2.996 -> 2.968 -> 2.953.
 
-What follows is a preliminary validation of the **prompted-LLM evaluation
-pipeline only** (`models/llm_prompting.py` + LLM-judge), run on a small
-sample (n=3) to confirm the pipeline works end-to-end before scaling.
+| Metric | Precision | Recall | F1 |
+|---|---|---|---|
+| ROUGE-1 | 0.046 | 0.427 | 0.080 |
+| ROUGE-2 | 0.014 | 0.159 | 0.025 |
+| ROUGE-L | 0.042 | 0.397 | 0.072 |
+| BERTScore | 0.815 | 0.871 | 0.842 |
 
-### Preliminary LLM-Judge Results (n=3 products)
+### Why ROUGE is low but BERTScore is high: a length-mismatch, not a quality failure
 
-An early prototype additionally computed ROUGE-L directly between BART's
-zero-shot (not fine-tuned) output and the LLM's output, for pipeline-testing
-purposes only. Per the task-granularity reasoning above, that number is
-**not a meaningful evaluation metric** (the two models aren't solving the
-same task) and is omitted here to avoid implying otherwise. See git history
-for the earlier draft if needed for reference.
+The ROUGE precision/recall split reveals *why* the F1 scores look poor at
+first glance. Recall is roughly 5-10x higher than precision across all
+three ROUGE variants. This pattern is the signature of a **length mismatch**
+between BART's generated summaries and the reference `Summary` values, not
+a sign that BART's summaries are inaccurate:
 
-| Product ID | LLM-Judge Winner | Judge Reasoning (summarized) |
-|---|---|---|
-| 0006641040 | Prompted LLM | Better synthesis across all reviews; captured both praise for content and the recurring size/quality complaint that a single extracted sentence misses |
-| 2734888454 | Prompted LLM | Structured output separated universal praise from the country-of-origin concern more clearly than an unsynthesized excerpt |
-| 7310172001 | Prompted LLM | Synthesized all 10 reviews into a structured overview versus a single reproduced review |
+- BART's fine-tuned output tends to be a full sentence or short paragraph,
+  faithfully compressing the review's content.
+- The dataset's `Summary` column, by contrast, is a **user-written review
+  headline** -- often just a few words, and frequently stylistically terse
+  or idiosyncratic rather than descriptive (e.g. "Flyboy Cessna" for a tea
+  review, "Ultimate Blend!" for a coffee review -- see the qualitative
+  examples in `01_train_bart.ipynb`'s sanity check).
+- High recall means BART's longer output happens to contain most of the
+  words that appear in the short reference. Low precision means BART's
+  output also contains many additional words the terse reference never
+  had -- inevitable when comparing a full-sentence summary against a
+  headline-length target.
 
-### Observations
+BERTScore F1 (0.842) tells a very different, more favorable story, because
+it measures semantic similarity via contextual embeddings rather than exact
+n-gram overlap -- it is far more tolerant of legitimate length and wording
+differences between a compressive summary and a terse headline. Taken
+together, **BART's fine-tuned summaries are semantically well-aligned with
+the source reviews (per BERTScore), even though they do not lexically match
+the dataset's headline-style reference summaries (per ROUGE)**.
 
-- The LLM-judge pipeline runs correctly end-to-end and produces reasoned,
-  specific justifications rather than generic preferences.
-- In this small sample, the prompted LLM's structured, multi-review
-  synthesis was consistently judged more useful to a prospective buyer
-  than BART's current zero-shot output, which tends to reproduce 1-2
-  source sentences with limited cross-review synthesis. This is expected:
-  the BART model being tested here is not yet fine-tuned on this dataset's
-  `Summary` targets, so this is not yet a fair fine-tuned-vs-zero-shot
-  comparison — it's closer to zero-shot-vs-zero-shot until training runs.
-- This sample size (n=3) is too small to draw conclusions from — it only
-  validates that the pipeline runs correctly.
+This is a genuine limitation of using `Summary` as ground truth: it is a
+reasonable training signal (review headlines do correlate with review
+content) but an imperfect evaluation reference, since it was never written
+to be a comprehensive summary in the first place. This caveat should be
+kept in mind when interpreting the ROUGE numbers above, and is worth
+noting explicitly rather than treating ROUGE F1 alone as a verdict on
+summary quality.
+
+## Prompted LLM: Preliminary LLM-Judge Results (n=3 products)
+
+An early pipeline-validation run (see git history for the original n=3
+smoke test) judged the prompted LLM's product-level summaries directly
+against the source reviews, since no reference summary exists at that
+granularity. All 3 cases favored the LLM's structured, multi-review
+synthesis over a single unsynthesized excerpt. This sample is too small to
+draw conclusions from and needs to be scaled up (see Next Steps).
 
 ## Next Steps
 
-1. Complete BART + LoRA fine-tuning (`training/train_bart.py`) against the
-   real `Summary` column.
-2. Run ROUGE-1/2/L and BERTScore for fine-tuned BART against held-out
-   `Summary` values (see `evaluation/rouge_metrics.py`,
-   `evaluation/bertscore_metrics.py`).
-3. Run the manual rubric (`evaluation/manual_evaluation.py`) on a larger,
-   randomly sampled set of products (target: n=30-50) for both models.
-4. Produce the qualitative cross-model comparison required by
-   `docs/methodology.md`, once both models have real, comparable outputs
-   to assess side by side.
-5. Track Claude API cost/latency at the larger scale for the feasibility
-   analysis in `docs/model_comparison.md`.
+1. Fill in `evaluation/manual_evaluation.py` with real scores: sample
+   ~10-15 products/reviews and rate both models (accuracy, completeness,
+   readability, hallucination-freedom, overall quality) by hand, since this
+   is the only fair head-to-head comparison per `docs/methodology.md` (the
+   two models solve different-granularity tasks with different reference
+   types, so no single automatic metric compares them directly).
+2. Scale the LLM-judge run beyond n=3 (target: n=30-50 products).
+3. Synthesize BART's automatic metrics + both models' manual rubric scores
+   into the cross-model comparison called for in `docs/model_comparison.md`.
+4. Track Claude API cost/latency at the larger scale for the feasibility
+   analysis.
