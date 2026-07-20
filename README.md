@@ -22,46 +22,48 @@ for full details, `docs/literature_review.md` for supporting research, and
 
 ## Repository Structure
 
-.
-├── data/
-│   ├── raw/                    # Raw dataset (gitignored; sample included)
-│   ├── processed/               # Cleaned/split data (generated)
-│   ├── download_dataset.py      # Kaggle download script
-│   ├── preprocess.py            # Cleaning, filtering, batching, splitting - tested
-│   └── exploratory_analysis.py  # EDA: distributions, missing data, figures - tested
-├── models/
-│   ├── config.py                # Shared hyperparameter configs
-│   ├── llm_prompting.py         # Claude API summarization pipeline - built
-│   └── bart_model.py            # BART + LoRA loading via PEFT - built
-├── training/
-│   ├── train_bart.py            # BART + LoRA fine-tuning loop - built
-│   ├── inference.py             # Beam-search generation (Phase 2)
-│   └── utils.py                 # Seeding, shared helpers
-├── evaluation/
-│   ├── evaluate.py              # Top-level evaluation runner (reference + llm-judge modes) - built
-│   ├── rouge_metrics.py         # ROUGE-1/2/L against reference summaries - built
-│   ├── bertscore_metrics.py     # BERTScore against reference summaries - built
-│   ├── llm_judge.py             # Claude-as-judge for prompted-LLM summaries (no reference) - built
-│   └── manual_evaluation.py     # Human rubric scoring scaffold
-├── notebooks/
-│   ├── 00_colab_setup.ipynb     # Run first each Colab session - ready
-│   └── 01_train_bart.ipynb      # Official BART + LoRA training run (30k-row subset) - ready
-├── experiments/
-│   └── README.md                # Scratch space for hyperparameter exploration, ad hoc checks
-├── docs/
-│   ├── methodology.md           # Approach, task-granularity decision, evaluation design
-│   ├── literature_review.md     # Verified summaries of 7 supporting papers - complete
-│   ├── model_comparison.md      # Benchmarking: accuracy, cost, scalability, reproducibility
-│   ├── evaluation_report.md     # Preliminary evaluation pipeline results (n=3)
-│   ├── pipeline_documentation.md
-│   └── timeline.md
-├── outputs/
-│   ├── summaries/, figures/, metrics/   # Generated artifacts (gitignored)
-│   └── bart_lora_*/                     # Training checkpoints (gitignored; backed up to Drive)
-├── tests/
-│   └── test_preprocess.py       # 8 passing unit tests
-├── requirements.txt
-└── .gitignore
+    .
+    ├── data/
+    │   ├── raw/                    # Raw dataset (gitignored; sample included)
+    │   ├── processed/               # Cleaned/split data (generated)
+    │   ├── download_dataset.py      # Kaggle download script
+    │   ├── preprocess.py            # Cleaning, filtering, batching, splitting - tested
+    │   └── exploratory_analysis.py  # EDA: distributions, missing data, figures - tested
+    ├── models/
+    │   ├── config.py                # Shared hyperparameter configs
+    │   ├── llm_prompting.py         # Claude API summarization pipeline - built
+    │   └── bart_model.py            # BART + LoRA loading via PEFT - built
+    ├── training/
+    │   ├── train_bart.py            # BART + LoRA fine-tuning loop - built
+    │   ├── inference.py             # Beam-search generation (Phase 2)
+    │   └── utils.py                 # Seeding, shared helpers
+    ├── evaluation/
+    │   ├── evaluate.py              # Top-level evaluation runner (reference + llm-judge modes) - built
+    │   ├── rouge_metrics.py         # ROUGE-1/2/L against reference summaries - built
+    │   ├── bertscore_metrics.py     # BERTScore against reference summaries - built
+    │   ├── llm_judge.py             # Claude-as-judge for prompted-LLM summaries (no reference) - built
+    │   └── manual_evaluation.py     # Human rubric scoring scaffold
+    ├── notebooks/
+    │   ├── 00_colab_setup.ipynb     # Run first each Colab session - ready
+    │   ├── 01_train_bart.ipynb      # Official BART + LoRA training run (30k-row subset) - ready
+    │   ├── 02_evaluate_bart.ipynb   # Official BART evaluation (ROUGE + BERTScore) - ready
+    │   └── 03_manual_eval.ipynb     # Manual rubric cross-model comparison - ready
+    ├── experiments/
+    │   └── README.md                # Scratch space for hyperparameter exploration, ad hoc checks
+    ├── docs/
+    │   ├── methodology.md           # Approach, task-granularity decision, evaluation design
+    │   ├── literature_review.md     # Verified summaries of 7 supporting papers - complete
+    │   ├── model_comparison.md      # Benchmarking: accuracy, cost, scalability, reproducibility
+    │   ├── evaluation_report.md     # Full evaluation: automatic metrics + manual rubric - complete
+    │   ├── pipeline_documentation.md
+    │   └── timeline.md
+    ├── outputs/
+    │   ├── summaries/, figures/, metrics/   # Generated artifacts (gitignored)
+    │   └── bart_lora_*/                     # Training checkpoints (gitignored; backed up to Drive)
+    ├── tests/
+    │   └── test_preprocess.py       # 8 passing unit tests
+    ├── requirements.txt
+    └── .gitignore
 
 **Status legend:** built & tested this milestone (marked "built"/"tested"/"complete") · scaffolded, implementation pending (marked "Phase 2"/"in progress") · not started. See `docs/timeline.md` for the full breakdown.
 
@@ -74,6 +76,8 @@ for full details, `docs/literature_review.md` for supporting research, and
 4. For fine-tuning BART, run `notebooks/01_train_bart.ipynb` afterward — it
    trains on a fixed 30k-row subset (~30-45 min on a T4) and backs the
    resulting checkpoint up to Drive
+5. For evaluation, run `notebooks/02_evaluate_bart.ipynb` (automatic metrics)
+   and `notebooks/03_manual_eval.ipynb` (manual rubric comparison)
 
 ## Setup (local, alternative)
 
@@ -141,16 +145,19 @@ Training uses the hyperparameters in `models/config.py`'s `BartConfig` and
 ## Running Evaluation
 
     # BART vs. reference Summary column (ROUGE + BERTScore)
-    python evaluation/evaluate.py reference \
+    python -m evaluation.evaluate reference \
         --predictions outputs/summaries/bart_predictions.csv \
         --pred-col prediction --ref-col Summary \
         --output outputs/metrics/bart_results.json
 
     # Prompted LLM vs. original reviews (Claude-as-judge, no reference needed)
-    python evaluation/evaluate.py llm-judge \
+    python -m evaluation.evaluate llm-judge \
         --batches data/processed/product_batches.json \
         --summaries outputs/summaries/llm_summaries.json \
         --output outputs/metrics/llm_judge_results.json
+
+See `docs/evaluation_report.md` for full results, including the manual
+rubric cross-model comparison.
 
 ## Running Tests
 
@@ -159,6 +166,6 @@ Training uses the hyperparameters in `models/config.py`'s `BartConfig` and
 ## Roadmap
 
 - [x] **Milestone 3** — Repo structure, README, data pipeline (built & tested), EDA, documentation, literature review
-- [ ] **Phase 2** — Prompted-LLM API wired in (done); BART + LoRA training pipeline built and running on a 30k-row subset
-- [ ] **Phase 3** — Evaluation pipeline built (ROUGE, BERTScore, LLM-judge); full-scale run pending
+- [x] **Phase 2** — Prompted-LLM API wired in; BART + LoRA fine-tuned on a 30k-row subset (real loss curve, see `01_train_bart.ipynb`)
+- [x] **Phase 3** — Evaluation complete: ROUGE, BERTScore, LLM-judge, and manual rubric cross-model comparison (see `docs/evaluation_report.md`)
 - [ ] **Phase 4** — Final report and presentation
