@@ -28,9 +28,9 @@ from preprocess import (  # noqa: E402
 @pytest.fixture
 def sample_df() -> pd.DataFrame:
     return pd.DataFrame({
-        "product_id": ["B001", "B001", "B001", "B002", "B002", "B003"],
-        "review_title": ["Good", "Good", "Meh", "Nice", "Nice", None],
-        "review_text": [
+        "ProductId": ["B001", "B001", "B001", "B002", "B002", "B003"],
+        "Summary": ["Good", "Good", "Meh", "Nice", "Nice", None],
+        "Text": [
             "This product works really well and I would buy it again.",
             "This product works really well and I would buy it again.",  # exact duplicate
             "ok",  # too short
@@ -38,15 +38,15 @@ def sample_df() -> pd.DataFrame:
             None,  # null text
             "",  # empty text
         ],
-        "rating": [5, 5, 3, 4, 4, 2],
-        "helpful_votes": [10, 10, 0, 3, 3, 0],
+        "Score": [5, 5, 3, 4, 4, 2],
+        "HelpfulnessNumerator": [10, 10, 0, 3, 3, 0],
     })
 
 
 def test_drop_missing_and_nulls_removes_null_and_empty_text(sample_df):
     result = drop_missing_and_nulls(sample_df)
-    assert result["review_text"].isna().sum() == 0
-    assert (result["review_text"].str.strip() == "").sum() == 0
+    assert result["Text"].isna().sum() == 0
+    assert (result["Text"].str.strip() == "").sum() == 0
     assert len(result) == 4  # drops the None and the "" rows
 
 
@@ -54,7 +54,7 @@ def test_remove_duplicates_drops_exact_duplicate(sample_df):
     df = drop_missing_and_nulls(sample_df)
     result = remove_duplicates(df)
     # the two identical "Good" / same text rows for B001 collapse to one
-    assert len(result[result["product_id"] == "B001"]) == 2  # "Good" (deduped) + "Meh"
+    assert len(result[result["ProductId"] == "B001"]) == 2  # "Good" (deduped) + "Meh"
 
 
 def test_clean_text_strips_html_and_collapses_whitespace():
@@ -73,36 +73,36 @@ def test_filter_uninformative_removes_short_reviews():
 
 def test_filter_non_english_drops_non_english_text():
     df = pd.DataFrame({
-        "product_id": ["B001", "B002"],
-        "review_text": [
+        "ProductId": ["B001", "B002"],
+        "Text": [
             "This is a perfectly normal English product review about quality.",
             "Ce produit est vraiment terrible et je ne le recommande pas du tout.",
         ],
-        "review_title": ["a", "b"],
-        "rating": [5, 1],
-        "helpful_votes": [0, 0],
+        "Summary": ["a", "b"],
+        "Score": [5, 1],
+        "HelpfulnessNumerator": [0, 0],
     })
     result = filter_non_english(df)
     assert len(result) == 1
-    assert result.iloc[0]["product_id"] == "B001"
+    assert result.iloc[0]["ProductId"] == "B001"
 
 
 def test_group_by_product_filters_low_count_products():
     df = pd.DataFrame({
-        "product_id": ["B001", "B001", "B002"],
-        "review_text": ["a review here", "another review here", "lonely review here"],
+        "ProductId": ["B001", "B001", "B002"],
+        "Text": ["a review here", "another review here", "lonely review here"],
     })
     result = group_by_product(df, min_reviews_per_product=2)
-    assert set(result["product_id"].unique()) == {"B001"}
+    assert set(result["ProductId"].unique()) == {"B001"}
 
 
 def test_create_batches_caps_batch_size():
     df = pd.DataFrame({
-        "product_id": ["B001"] * 5,
-        "review_title": ["t"] * 5,
-        "review_text": ["some review text here"] * 5,
-        "rating": [5] * 5,
-        "helpful_votes": [0] * 5,
+        "ProductId": ["B001"] * 5,
+        "Summary": ["t"] * 5,
+        "Text": ["some review text here"] * 5,
+        "Score": [5] * 5,
+        "HelpfulnessNumerator": [0] * 5,
     })
     batches = create_batches(df, batch_size=3)
     assert len(batches) == 1
@@ -111,13 +111,13 @@ def test_create_batches_caps_batch_size():
 
 def test_train_val_test_split_keeps_products_together():
     df = pd.DataFrame({
-        "product_id": [f"P{i}" for i in range(20) for _ in range(3)],
-        "review_text": ["a review here"] * 60,
+        "ProductId": [f"P{i}" for i in range(20) for _ in range(3)],
+        "Text": ["a review here"] * 60,
     })
     train_df, val_df, test_df = train_val_test_split(df, train_frac=0.7, val_frac=0.15)
-    train_ids = set(train_df["product_id"])
-    val_ids = set(val_df["product_id"])
-    test_ids = set(test_df["product_id"])
+    train_ids = set(train_df["ProductId"])
+    val_ids = set(val_df["ProductId"])
+    test_ids = set(test_df["ProductId"])
     # no product should appear in more than one split
     assert train_ids.isdisjoint(val_ids)
     assert train_ids.isdisjoint(test_ids)
