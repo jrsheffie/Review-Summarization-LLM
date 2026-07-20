@@ -10,7 +10,7 @@ as of this milestone.*
 
 ## 2. T5 (Raffel et al., 2020 — "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer")
 **Key contribution:** Reframes every NLP task — classification, translation, summarization — as a text-to-text problem, and systematically studies pretraining objectives and model/data scale on this unified framework.
-**Relevance to this project:** Serves as a conceptual point of contrast to BART in this project's methodology — both are encoder-decoder models suited to summarization, but T5's text-to-text framing differs from BART's denoising-reconstruction framing, which is worth noting when justifying the choice of BART specifically.
+**Relevance to this project:** Serves as a conceptual point of contrast to BART in this project's methodology — both are encoder-decoder models suited to summarization, but T5's text-to-text framing differs from BART's denoising-reconstruction framing, which is worth noting when justifying the choice of BART specifically. *Verified against the paper's actual abstract.*
 **Citation:** Raffel, C., et al. (2020). Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer. *Journal of Machine Learning Research*, 21(140), 1-67.
 
 ## 3. LoRA (Hu et al., 2021 — "LoRA: Low-Rank Adaptation of Large Language Models")
