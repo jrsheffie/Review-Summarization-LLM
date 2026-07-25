@@ -163,6 +163,41 @@ rubric cross-model comparison.
 
     pytest tests/ -v
 
+## Known Issues & Limitations
+
+- **BART occasionally produces degenerate, repetitive output.** When the
+  source review contains heavy punctuation or exclamation marks, BART's
+  beam search can collapse into repeating a phrase (e.g. "Love, love, love
+  this mix!!!!!!!!!!!!!!!!!!" -- see `outputs/samples/sample_01_bart_finetuned.txt`
+  and the peppermint-straws case in `docs/evaluation_report.md`'s manual
+  rubric findings). This happened in roughly 1 of 10 hand-scored samples.
+- **BART sometimes fabricates details not present in its input**, including
+  invented price points, an invented "great price" claim, and an invented
+  product use case, when summarizing a single short review with limited
+  context. See `docs/evaluation_report.md` for specific examples and the
+  full manual rubric scores.
+- **BART's fine-tuning used a 30k-row subset of the ~317k-row dataset**,
+  for 3 epochs, as a deliberate time/quality tradeoff (see
+  `docs/model_comparison.md`). Training on more data or for more epochs may
+  reduce the fabrication and repetition issues above.
+- **ROUGE scores for BART look low (~0.08 F1) despite reasonable output
+  quality per BERTScore (0.84 F1)** -- this is a length mismatch, not a
+  quality failure: the dataset's `Summary` column is a short, sometimes
+  stylistically unrelated review headline rather than a descriptive
+  summary. See `docs/evaluation_report.md` for the full explanation.
+- **BART and the prompted LLM are not directly comparable via a single
+  automatic metric**, since they operate at different task granularities
+  (BART: single review -> headline; LLM: full multi-review batch ->
+  structured summary, with no reference available). The cross-model
+  comparison instead relies on a manual rubric (n=10, see
+  `docs/evaluation_report.md`).
+- **The prompted-LLM path requires a valid `ANTHROPIC_API_KEY`** and incurs
+  real API cost per call; it has not been run at full dataset scale.
+- **`torchao` version conflicts have appeared intermittently** in fresh
+  Colab environments (a `peft`/`torchao` compatibility check can fail on an
+  older cached version). If `src/model_runner.py --model bart` errors on
+  `PeftModel.from_pretrained`, run `pip install -U torchao` and retry.
+
 ## Roadmap
 
 - [x] **Milestone 3** — Repo structure, README, data pipeline (built & tested), EDA, documentation, literature review
