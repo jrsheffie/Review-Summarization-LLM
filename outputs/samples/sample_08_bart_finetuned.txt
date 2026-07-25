@@ -1,0 +1,12 @@
+MODEL:
+bart_finetuned
+
+INPUT:
+The 8 Country Ham Shanks arrived at my door 36 hours after I ordered. I live 100 miles from California, Missouri so that might have helped in the expeditious delivery. The Shanks are much larger than I expected, about the size of a football (American) cut in half. They were not frozen on delivery. They come in a durable plastic as pictured and I guess they weigh about 2 pounds. The Ham Shank is cut in the middle, but not all the way through. I made navy bean soup with it and it was great. Meatier than usual. If I could get good shanks locally, I would not have tried Burger brand. But the butcher I frequent does not sell ham hocks. I'm hooked and will order again before winter is over. In summer I will make a trip to Missouri and visit the smoke house.
+
+REFERENCE_SUMMARY:
+Great Shanks for cooking
+
+GENERATED_SUMMARY:
+8 Country Ham Shanks delivered in 36 hours. Great meatier than I expected. Will order again before winter is over, but will visit Missouri Smoke House in summer. If you can get good shanks locally, try Burger brand, but butcher does not sell ham hocks there.
+

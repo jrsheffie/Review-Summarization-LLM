@@ -1,0 +1,50 @@
+[
+  {
+    "model": "bart_finetuned",
+    "input": "Cookies & muffins are something my son hasn't been able to have until now. This mix has been a life-saver for me since my son is a very pickey eater.",
+    "reference_summary": "Makes great cookies & muffins!!",
+    "generated_summary": "Great for pickey eaters! Great for pickels! Love this mix! Love the taste of this mix, love the texture! Love it! Love, love, love this mix. Love, LOVE this mix!!!!!!!!!!!!!!!!!!"
+  },
+  {
+    "model": "bart_finetuned",
+    "input": "When purchased from a store or coffee shop, this is my favorite roast. The fresh beans are dark, aromatic, oily and flavorful. The ground beans in this three-pack are ok, but I get the feeling they have been around for a while. Probably worth paying the extra money to get it fresh from a store.",
+    "reference_summary": "Mixed review",
+    "generated_summary": "Best Roast I've Ever Had, But Not the Best Ground Beans. Best Roast in a Three-pack of 3-Packs, $9.99/3-Pack, $1.50/2-Piece, $2.50-3.50"
+  },
+  {
+    "model": "bart_finetuned",
+    "input": "Won't eat 'em! Hence the three stars as I wanted to keep it neutral. As always your mileage may vary. Some cats probably really like these things. She's not totally wild about Cosequin either, even though I think that's probably the best formula for kitty arthritis. If you your cat is fussy but they like stuff like Laxatone, give them Feline Joint Gel. She practically does a happy dance when I get the tube out. And I can really see a difference in her ability to jump up on furniture when I give her the glucosamine supplements. Just not this one.",
+    "reference_summary": "My cat hates these:(",
+    "generated_summary": "Won't eat 'em, won't drink'em, don't give 'em to your cat, but they're not bad for her arthritis, but she won't take 'em for a drink. If you your cat is fussy but they like stuff like Laxatone,"
+  },
+  {
+    "model": "bart_finetuned",
+    "input": "I have to admit, I first purchased these Hazelnut K-Cups because of the low price. I had to pick some up for the office, and the price was right. I was very pleasantly surprised with the coffee! Better flavor than some K-Cups that cost a lot more.",
+    "reference_summary": "Great Coffee at a Great price",
+    "generated_summary": "Very good coffee for a great price. Better than I had expected. Great flavor. Great price. Great coffee. Great taste. Good price. Good coffee. Good flavor. Better flavor than some K-Cups that cost a lot more. Better coffee than I expected."
+  },
+  {
+    "model": "bart_finetuned",
+    "input": "I was a bit skeptical about this item. But the shampoo smells great and works well. It puts a lot of hydration in my hair, especially at the ends, which always seem to be dry and splitting. I haven't tried it with its corresponding conditioner, but I feel that would even be better and I am happy with using only the shampoo then my usual conditioner.",
+    "reference_summary": "It makes my ends soft",
+    "generated_summary": " shampoo and conditioner for my hair. Works well. It smells great and puts a lot of hydration in my hair, especially at the ends, which always seem to be dry and splitting and split at the end of the day. It works well. If you like it."
+  },
+  {
+    "model": "bart_finetuned",
+    "input": "I recently bought a Keurig but all of the ciders I found for it had an artificial after taste. I bought this for my holiday company and we just used the Keuring machine without a kcup. It was so delicious that 2 of my guest had to know where I bought it. I got the 6 pack of cans and have already gone through 2 of them in just a week! This is the best cider ever!",
+    "reference_summary": "Delicious!",
+    "generated_summary": " cider for Keurig coffee machine. Great taste! Great price! Great product! Great taste. Great price. Great product. Great cider! Great cider. Great ciders! Great cider, great cider, wonderful ciders, delicious ciders. Great!"
+  },
+  {
+    "model": "bart_finetuned",
+    "input": "Stella and Chewys is the ONLY dog food my spoiled Lhasa Apso will eat... I feel much better that he is eating a more balanced meal than the boiled chicken only.. His 'business' proves his little body loves it too... I'm a believer...",
+    "reference_summary": "My dog loves it!",
+    "generated_summary": " dog food for my spoiled Lhasa Apso...Stella and Chewys is the ONLY dog food my spoiled dog will eat... I'm a believer... I love Stella and Chewy dog food. I love it. I'm the only dog food I buy for my dog, Stella and"
+  },
+  {
+    "model": "bart_finetuned",
+    "input": "The 8 Country Ham Shanks arrived at my door 36 hours after I ordered. I live 100 miles from California, Missouri so that might have helped in the expeditious delivery. The Shanks are much larger than I expected, about the size of a football (American) cut in half. They were not frozen on delivery. They come in a durable plastic as pictured and I guess they weigh about 2 pounds. The Ham Shank is cut in the middle, but not all the way through. I made navy bean soup with it and it was great. Meatier than usual. If I could get good shanks locally, I would not have tried Burger brand. But the butcher I frequent does not sell ham hocks. I'm hooked and will order again before winter is over. In summer I will make a trip to Missouri and visit the smoke house.",
+    "reference_summary": "Great Shanks for cooking",
+    "generated_summary": "8 Country Ham Shanks delivered in 36 hours. Great meatier than I expected. Will order again before winter is over, but will visit Missouri Smoke House in summer. If you can get good shanks locally, try Burger brand, but butcher does not sell ham hocks there."
+  }
+]

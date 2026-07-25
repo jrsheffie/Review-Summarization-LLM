@@ -1,0 +1,12 @@
+MODEL:
+bart_finetuned
+
+INPUT:
+Won't eat 'em! Hence the three stars as I wanted to keep it neutral. As always your mileage may vary. Some cats probably really like these things. She's not totally wild about Cosequin either, even though I think that's probably the best formula for kitty arthritis. If you your cat is fussy but they like stuff like Laxatone, give them Feline Joint Gel. She practically does a happy dance when I get the tube out. And I can really see a difference in her ability to jump up on furniture when I give her the glucosamine supplements. Just not this one.
+
+REFERENCE_SUMMARY:
+My cat hates these:(
+
+GENERATED_SUMMARY:
+Won't eat 'em, won't drink'em, don't give 'em to your cat, but they're not bad for her arthritis, but she won't take 'em for a drink. If you your cat is fussy but they like stuff like Laxatone,
+

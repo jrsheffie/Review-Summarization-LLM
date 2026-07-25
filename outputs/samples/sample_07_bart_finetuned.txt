@@ -1,0 +1,12 @@
+MODEL:
+bart_finetuned
+
+INPUT:
+Stella and Chewys is the ONLY dog food my spoiled Lhasa Apso will eat... I feel much better that he is eating a more balanced meal than the boiled chicken only.. His 'business' proves his little body loves it too... I'm a believer...
+
+REFERENCE_SUMMARY:
+My dog loves it!
+
+GENERATED_SUMMARY:
+ dog food for my spoiled Lhasa Apso...Stella and Chewys is the ONLY dog food my spoiled dog will eat... I'm a believer... I love Stella and Chewy dog food. I love it. I'm the only dog food I buy for my dog, Stella and
+

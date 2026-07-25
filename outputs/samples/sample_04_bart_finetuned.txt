@@ -1,0 +1,12 @@
+MODEL:
+bart_finetuned
+
+INPUT:
+I have to admit, I first purchased these Hazelnut K-Cups because of the low price. I had to pick some up for the office, and the price was right. I was very pleasantly surprised with the coffee! Better flavor than some K-Cups that cost a lot more.
+
+REFERENCE_SUMMARY:
+Great Coffee at a Great price
+
+GENERATED_SUMMARY:
+Very good coffee for a great price. Better than I had expected. Great flavor. Great price. Great coffee. Great taste. Good price. Good coffee. Good flavor. Better flavor than some K-Cups that cost a lot more. Better coffee than I expected.
+

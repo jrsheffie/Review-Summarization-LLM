@@ -1,0 +1,12 @@
+MODEL:
+bart_finetuned
+
+INPUT:
+Cookies & muffins are something my son hasn't been able to have until now. This mix has been a life-saver for me since my son is a very pickey eater.
+
+REFERENCE_SUMMARY:
+Makes great cookies & muffins!!
+
+GENERATED_SUMMARY:
+Great for pickey eaters! Great for pickels! Love this mix! Love the taste of this mix, love the texture! Love it! Love, love, love this mix. Love, LOVE this mix!!!!!!!!!!!!!!!!!!
+

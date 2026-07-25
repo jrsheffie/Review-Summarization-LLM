@@ -1,0 +1,22 @@
+MODEL:
+prompted_llm
+
+PRODUCT_ID:
+7800648702
+
+NUM_REVIEWS:
+2
+
+GENERATED_SUMMARY:
+Overall sentiment: Customers generally appreciate the generous size and unique light flavor of these strawberry wafer cookies, though some find them not sweet enough.
+
+Pros:
+- Comes in a large tin with approximately 80 cookies and a double lid to maintain freshness
+- Light, crispy texture with a subtle strawberry flavor that is not overly sweet, making them great for dunking
+
+Cons:
+- Not sweet enough for those with a strong sweet tooth, as they contain only 4 grams of sugar per serving
+- Price sensitivity is a concern, with at least one customer unwilling to pay full price for the tin
+
+Recommendation: These strawberry wafer cookies are a great buy at a lower price point for those who enjoy a light, less sweet treat, but may disappoint customers looking for a more indulgent, sugary cookie.
+

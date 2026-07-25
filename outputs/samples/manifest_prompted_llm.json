@@ -1,0 +1,32 @@
+[
+  {
+    "model": "prompted_llm",
+    "product_id": "0006641040",
+    "num_reviews": 10,
+    "generated_summary": "Overall sentiment: Customers overwhelmingly love the content and nostalgic charm of this classic Maurice Sendak book, though many are disappointed by the unexpectedly small physical size of this particular edition.\n\nPros:\n- Beloved classic with timeless, catchy rhymes that effectively and enjoyably teach children the months of the year in a way that resonates across generations.\n- Strong nostalgic appeal that connects parents and grandparents to their own childhoods while creating new memories with their children.\n\nCons:\n- The book is much smaller than expected (approximately 4x5 inches), leaving many buyers feeling the edition is underwhelming and overpriced for its size.\n- The small format makes it easy to lose on a bookshelf and causes some buyers to feel embarrassed giving it as a gift compared to older, larger editions.\n\nRecommendation: If you love the story itself, seek out a larger or used edition of this book rather than this particular small-format version to get the full experience this classic deserves."
+  },
+  {
+    "model": "prompted_llm",
+    "product_id": "2734888454",
+    "num_reviews": 2,
+    "generated_summary": "Overall sentiment: Customer opinions are mixed, with strong appreciation for the product's quality tempered by significant concern over its country of origin.\n\nPros:\n- Dogs find the chicken treats highly palatable and enjoyable\n- The product appears to include safety information/certification tags that reassure some customers\n\nCons:\n- Product is manufactured in China, which is a dealbreaker for safety-conscious pet owners\n- Lack of transparency or confidence around Chinese import safety standards causes hesitation to repurchase\n\nRecommendation: This product may appeal to dog owners who are satisfied by the provided safety documentation, but those concerned about Chinese-manufactured pet food should seek a USA-made alternative."
+  },
+  {
+    "model": "prompted_llm",
+    "product_id": "7310172001",
+    "num_reviews": 10,
+    "generated_summary": "Overall sentiment: Customers are overwhelmingly positive about these freeze-dried beef liver treats, praising them as highly effective training rewards that dogs of all breeds and preferences absolutely love.\n\nPros:\n- Highly palatable and motivating for even picky eaters, making them exceptionally effective for training purposes\n- Made from 100% beef liver in the USA with no artificial chemicals, and offer good value with a large container size that can be cut into multiple smaller pieces to extend use\n\nCons:\n- The treats have an unpleasant smell that some owners find off-putting\n- The price is considered somewhat expensive, though most reviewers feel the quality and quantity justify the cost\n\nRecommendation: These freeze-dried beef liver treats are highly recommended for dog owners seeking a natural, high-quality training treat that will capture even the most finicky dog's attention."
+  },
+  {
+    "model": "prompted_llm",
+    "product_id": "7310172101",
+    "num_reviews": 10,
+    "generated_summary": "Overall sentiment: Customers are overwhelmingly positive about these freeze-dried beef liver treats, praising them as highly effective training rewards that dogs absolutely love.\n\nPros:\n- Dogs find the treats irresistible, making them highly effective for training, encouraging picky eaters, and reinforcing good behavior\n- Made from 100% beef liver in the USA with no artificial chemicals, offering pure nutrition in a large, good-value container\n\nCons:\n- The treats are considered somewhat expensive compared to standard pet store options\n- The smell is notably unpleasant for humans handling them\n\nRecommendation: These freeze-dried beef liver treats are highly recommended for dog owners seeking a natural, effective training reward, especially for picky eaters or dogs in behavioral training."
+  },
+  {
+    "model": "prompted_llm",
+    "product_id": "7800648702",
+    "num_reviews": 2,
+    "generated_summary": "Overall sentiment: Customers generally appreciate the generous size and unique light flavor of these strawberry wafer cookies, though some find them not sweet enough.\n\nPros:\n- Comes in a large tin with approximately 80 cookies and a double lid to maintain freshness\n- Light, crispy texture with a subtle strawberry flavor that is not overly sweet, making them great for dunking\n\nCons:\n- Not sweet enough for those with a strong sweet tooth, as they contain only 4 grams of sugar per serving\n- Price sensitivity is a concern, with at least one customer unwilling to pay full price for the tin\n\nRecommendation: These strawberry wafer cookies are a great buy at a lower price point for those who enjoy a light, less sweet treat, but may disappoint customers looking for a more indulgent, sugary cookie."
+  }
+]

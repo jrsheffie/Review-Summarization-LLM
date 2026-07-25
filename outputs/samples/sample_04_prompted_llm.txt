@@ -1,0 +1,22 @@
+MODEL:
+prompted_llm
+
+PRODUCT_ID:
+7310172101
+
+NUM_REVIEWS:
+10
+
+GENERATED_SUMMARY:
+Overall sentiment: Customers are overwhelmingly positive about these freeze-dried beef liver treats, praising them as highly effective training rewards that dogs absolutely love.
+
+Pros:
+- Dogs find the treats irresistible, making them highly effective for training, encouraging picky eaters, and reinforcing good behavior
+- Made from 100% beef liver in the USA with no artificial chemicals, offering pure nutrition in a large, good-value container
+
+Cons:
+- The treats are considered somewhat expensive compared to standard pet store options
+- The smell is notably unpleasant for humans handling them
+
+Recommendation: These freeze-dried beef liver treats are highly recommended for dog owners seeking a natural, effective training reward, especially for picky eaters or dogs in behavioral training.
+

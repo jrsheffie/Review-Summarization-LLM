@@ -1,0 +1,12 @@
+MODEL:
+bart_finetuned
+
+INPUT:
+When purchased from a store or coffee shop, this is my favorite roast. The fresh beans are dark, aromatic, oily and flavorful. The ground beans in this three-pack are ok, but I get the feeling they have been around for a while. Probably worth paying the extra money to get it fresh from a store.
+
+REFERENCE_SUMMARY:
+Mixed review
+
+GENERATED_SUMMARY:
+Best Roast I've Ever Had, But Not the Best Ground Beans. Best Roast in a Three-pack of 3-Packs, $9.99/3-Pack, $1.50/2-Piece, $2.50-3.50
+

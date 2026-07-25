@@ -1,0 +1,12 @@
+MODEL:
+bart_finetuned
+
+INPUT:
+I recently bought a Keurig but all of the ciders I found for it had an artificial after taste. I bought this for my holiday company and we just used the Keuring machine without a kcup. It was so delicious that 2 of my guest had to know where I bought it. I got the 6 pack of cans and have already gone through 2 of them in just a week! This is the best cider ever!
+
+REFERENCE_SUMMARY:
+Delicious!
+
+GENERATED_SUMMARY:
+ cider for Keurig coffee machine. Great taste! Great price! Great product! Great taste. Great price. Great product. Great cider! Great cider. Great ciders! Great cider, great cider, wonderful ciders, delicious ciders. Great!
+

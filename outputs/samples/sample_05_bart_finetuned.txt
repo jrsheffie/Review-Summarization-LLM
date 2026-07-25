@@ -1,0 +1,12 @@
+MODEL:
+bart_finetuned
+
+INPUT:
+I was a bit skeptical about this item. But the shampoo smells great and works well. It puts a lot of hydration in my hair, especially at the ends, which always seem to be dry and splitting. I haven't tried it with its corresponding conditioner, but I feel that would even be better and I am happy with using only the shampoo then my usual conditioner.
+
+REFERENCE_SUMMARY:
+It makes my ends soft
+
+GENERATED_SUMMARY:
+ shampoo and conditioner for my hair. Works well. It smells great and puts a lot of hydration in my hair, especially at the ends, which always seem to be dry and splitting and split at the end of the day. It works well. If you like it.
+
