@@ -181,6 +181,13 @@ number of samples, and saves each sample plus a structured manifest to
 See `docs/evaluation_report.md` for full results, including the manual
 rubric cross-model comparison.
 
+## Docker (optional)
+
+A `Dockerfile` is provided for the CPU-friendly parts of the pipeline (data preprocessing, tests, and inference via `src/model_runner.py`). GPU-dependent BART training is intended for Colab (see `notebooks/01_train_bart.ipynb`) and is not containerized.
+
+    docker build -t review-summarization .
+    docker run --rm review-summarization
+
 ## Running Tests
 
     pytest tests/ -v
