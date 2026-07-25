@@ -23,6 +23,8 @@ for full details, `docs/literature_review.md` for supporting research, and
 ## Repository Structure
 
     .
+    ├── src/
+    │   └── model_runner.py       # Single-command pipeline entry point - built
     ├── data/
     │   ├── raw/                    # Raw dataset (gitignored; sample included)
     │   ├── processed/               # Cleaned/split data (generated)
@@ -64,6 +66,13 @@ for full details, `docs/literature_review.md` for supporting research, and
     │   └── test_preprocess.py       # 8 passing unit tests
     ├── requirements.txt
     └── .gitignore
+
+**Note on structure:** this repo predates a later assignment's suggested
+`src/`/`configs/`/`utils/` layout, so components are organized by pipeline
+stage instead: `models/config.py` serves the role of `configs/`,
+`training/utils.py` serves the role of `utils/`, and `src/model_runner.py`
+is the single-command entry point tying `models/`, `training/`, and
+`evaluation/` together.
 
 **Status legend:** built & tested this milestone (marked "built"/"tested"/"complete") · scaffolded, implementation pending (marked "Phase 2"/"in progress") · not started. See `docs/timeline.md` for the full breakdown.
 
@@ -141,6 +150,19 @@ in training and evaluation.
 Training uses the hyperparameters in `models/config.py`'s `BartConfig` and
 `LoRAConfig`. For alternate subset sizes or hyperparameter exploration, see
 `experiments/`.
+
+## Running the Model Pipeline (single command)
+
+    # Fine-tuned BART (falls back to base pretrained BART if no checkpoint found)
+    python src/model_runner.py --model bart --n-samples 8
+
+    # Prompted LLM (requires ANTHROPIC_API_KEY)
+    python src/model_runner.py --model llm --n-samples 5
+
+Loads the dataset (falling back to the committed sample if processed data
+isn't present), loads the selected model, runs inference on the requested
+number of samples, and saves each sample plus a structured manifest to
+`outputs/samples/`. See `outputs/samples/README.md` for the most recent run.
 
 ## Running Evaluation
 
