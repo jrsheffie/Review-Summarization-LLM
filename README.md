@@ -1,7 +1,7 @@
 # Review-Summarization-LLM
 
 **Summarizing Customer Product Reviews Using Generative AI**
-IE7374 Final Project — Josiah Sheffie
+IE7374 Final Project — Josiah Sheffie (solo submission)
 
 ## Overview
 
