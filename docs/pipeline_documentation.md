@@ -12,7 +12,7 @@ the LLM.
 ## Input Schema
 
 The pipeline expects a CSV with the following columns (see `COLUMN_MAP` in
-`src/data_pipeline.py` if your downloaded version of the dataset uses
+`data/preprocess.py` if your downloaded version of the dataset uses
 different column names):
 
 | Column | Description |
@@ -73,7 +73,7 @@ prompt templates.
 
 ## Outputs
 
-Running `src/data_pipeline.py` produces, in `data/processed/`:
+Running `data/preprocess.py` produces, in `data/processed/`:
 
 - `clean_reviews.csv` — full cleaned dataset
 - `train.csv`, `val.csv`, `test.csv` — product-level splits for BART
@@ -89,8 +89,8 @@ Running `src/data_pipeline.py` produces, in `data/processed/`:
    ```bash
    kaggle datasets download -d <dataset-owner>/<dataset-slug> -p data/raw --unzip
    ```
-5. Update `COLUMN_MAP` in `src/data_pipeline.py` if the downloaded column
+5. Update `COLUMN_MAP` in `data/preprocess.py` if the downloaded column
    names differ from the schema above, then run:
    ```bash
-   python src/data_pipeline.py --input data/raw/<file>.csv --output-dir data/processed
+   python data/preprocess.py --input data/raw/<file>.csv --output-dir data/processed
    ```
