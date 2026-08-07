@@ -232,4 +232,4 @@ A `Dockerfile` is provided for the CPU-friendly parts of the pipeline (data prep
 - [x] **Milestone 3** — Repo structure, README, data pipeline (built & tested), EDA, documentation, literature review
 - [x] **Phase 2** — Prompted-LLM API wired in; BART + LoRA fine-tuned on a 30k-row subset (real loss curve, see `01_train_bart.ipynb`)
 - [x] **Phase 3** — Evaluation complete: ROUGE, BERTScore, LLM-judge, and manual rubric cross-model comparison (see `docs/evaluation_report.md`)
-- [ ] **Phase 4** — Final report and presentation
+- [x] **Phase 4** — Final technical report, presentation slides, and video complete (Milestone 5)
